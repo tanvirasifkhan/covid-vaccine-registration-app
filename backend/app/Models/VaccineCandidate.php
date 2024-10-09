@@ -13,7 +13,7 @@ class VaccineCandidate extends Model
 
     protected $table = "vaccine_candidates";
 
-    protected $fillable = ["center_id", "name", "email", "phone", "status", "scheduled_at"];
+    protected $fillable = ["center_id", "name", "email", "phone", "nid"];
 
     public function vaccineCenter(): BelongsTo
     {
