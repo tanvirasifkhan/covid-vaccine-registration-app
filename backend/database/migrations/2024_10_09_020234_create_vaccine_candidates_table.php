@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('nid')->unique();
-            $table->dateTime('scheduled_at');
+            $table->dateTime('scheduled_at')->nullable();
             $table->enum('status', ['scheduled', 'vaccinated'])->nullable();
             $table->timestamps();
             $table->foreign('center_id')->references('id')->on('vaccine_centers')->onDelete('cascade');
