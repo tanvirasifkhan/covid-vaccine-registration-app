@@ -17,6 +17,6 @@ class VaccineCenter extends Model
 
     public function vaccineCandidate(): HasMany
     {
-        return $this->hasMany(VaccineCandidate::class);
+        return $this->hasMany(VaccineCandidate::class, 'center_id');
     }
 }
