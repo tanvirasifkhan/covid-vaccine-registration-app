@@ -19,7 +19,9 @@ class VaccineCenterResource extends JsonResource
             'candidates' => $this->vaccineCandidate,
             'name' => $this->name,
             'limit' => $this->limit,
-            'address' => $this->address
+            'totalOccupency' => $this->vaccineCandidate->count(),
+            'address' => $this->address,
+            'canAccomodate' => $this->limit > $this->vaccineCandidate->count()
         ];
     }
 }
