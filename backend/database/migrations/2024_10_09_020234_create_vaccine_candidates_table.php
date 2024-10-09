@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
+            $table->string('nid')->unique();
             $table->dateTime('scheduled_at');
             $table->enum('status', ['scheduled', 'vaccinated'])->nullable();
             $table->timestamps();
