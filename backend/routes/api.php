@@ -9,6 +9,7 @@ use App\Http\Controllers\VaccineCandidate\RegisterVaccineCandidateController;
 use App\Http\Controllers\VaccineCandidate\ReadAllVaccineCandidateController;
 use App\Http\Controllers\VaccineCandidate\ReadVaccineCandidateController;
 use App\Http\Controllers\VaccineCandidate\AssignScheduleVaccineCandidateController;
+use App\Http\Controllers\VaccineCandidate\SearchVaccineCandidateController;
 
 /******************* Authentication API Endpoints *******************************/
 Route::post('login', AuthLoginController::class);
@@ -22,3 +23,4 @@ Route::post('vaccine-candidates', RegisterVaccineCandidateController::class);
 Route::get('vaccine-candidates', ReadAllVaccineCandidateController::class)->middleware('auth:sanctum');
 Route::get('vaccine-candidates/{id}', ReadVaccineCandidateController::class);
 Route::patch('vaccine-candidates/{id}/schedule', AssignScheduleVaccineCandidateController::class);
+Route::get('vaccine-candidates/search/by-nid', SearchVaccineCandidateController::class);

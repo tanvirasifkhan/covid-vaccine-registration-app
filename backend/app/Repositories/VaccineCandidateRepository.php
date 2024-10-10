@@ -88,4 +88,12 @@ class VaccineCandidateRepository implements VaccineCandidateRepositoryInterface
 
         return $numericDayRepresentation == "5" || $numericDayRepresentation == "6";
     }
+
+    /**
+     * search by nid
+     */
+    public function searchByNID(string $nid): VaccineCandidate | NULL
+    {
+        return VaccineCandidate::where('nid', $nid)->first();
+    }
 }

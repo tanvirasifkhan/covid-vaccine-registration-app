@@ -23,4 +23,6 @@ interface VaccineCandidateRepositoryInterface
 
     public function isWeekend(string $scheduleDate): bool;
 
+    public function searchByNID(string $nid): VaccineCandidate | NULL;
+
 }
