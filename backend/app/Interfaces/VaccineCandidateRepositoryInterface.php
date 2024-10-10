@@ -21,4 +21,6 @@ interface VaccineCandidateRepositoryInterface
 
     public function canAccomodateCandidates(int $centerId): bool;
 
+    public function isWeekend(string $scheduleDate): bool;
+
 }

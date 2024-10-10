@@ -78,4 +78,14 @@ class VaccineCandidateRepository implements VaccineCandidateRepositoryInterface
 
         return $centerAccomodationCapacity > $this->countCandidatesByCenter($centerId);
     }
+
+    /**
+     * determine whather the date is an weekend or not
+     */
+    public function isWeekend(string $scheduleDate): bool
+    {
+        $numericDayRepresentation =  date_format(date_create($scheduleDate), 'w');
+
+        return $numericDayRepresentation == "5" || $numericDayRepresentation == "6";
+    }
 }
