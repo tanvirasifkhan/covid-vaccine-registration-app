@@ -17,4 +17,8 @@ interface VaccineCandidateRepositoryInterface
 
     public function alreadyScheduled(int $id): bool;
 
+    public function countCandidatesByCenter(int $centerId): int;
+
+    public function canAccomodateCandidates(int $centerId): bool;
+
 }
