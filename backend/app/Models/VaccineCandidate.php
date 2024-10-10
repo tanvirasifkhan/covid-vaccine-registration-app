@@ -17,6 +17,6 @@ class VaccineCandidate extends Model
 
     public function vaccineCenter(): BelongsTo
     {
-        return $this->belongsTo(VaccineCenter::class, 'id');
+        return $this->belongsTo(VaccineCenter::class, 'center_id');
     }
 }

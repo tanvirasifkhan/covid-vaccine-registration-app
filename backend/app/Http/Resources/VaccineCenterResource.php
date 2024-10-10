@@ -18,8 +18,8 @@ class VaccineCenterResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'limit' => $this->limit,
-            'totalOccupency' => $this->vaccineCandidate->count(),
+            'capacity' => $this->limit,
+            'totalOccupied' => $this->vaccineCandidate->count(),
             'address' => $this->address,
             'canAccomodate' => $this->limit > $this->vaccineCandidate->count()
         ];
