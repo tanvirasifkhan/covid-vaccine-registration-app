@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\VaccineCandidateRepositoryInterface;
 use App\Models\VaccineCandidate;
+use App\Models\VaccineCenter;
 use Illuminate\Database\Eloquent\Collection;
 use App\Enums\VaccineCandidateStatus;
 
@@ -58,5 +59,23 @@ class VaccineCandidateRepository implements VaccineCandidateRepositoryInterface
     public function alreadyScheduled(int $id): bool
     {
         return $this->fetch($id)->status == VaccineCandidateStatus::SCHEDULED->value;
+    }
+
+    /**
+     * count candidates by center
+     */
+    public function countCandidatesByCenter(int $centerId): int
+    {
+        return VaccineCandidate::where('center_id', $centerId)->count();
+    }
+
+    /**
+     * check whether the center limit is crossed
+     */
+    public function canAccomodateCandidates(int $centerId): bool
+    {
+        $centerAccomodationCapacity = VaccineCenter::where('id', $centerId)->first()->limit;
+
+        return $centerAccomodationCapacity > $this->countCandidatesByCenter($centerId);
     }
 }
