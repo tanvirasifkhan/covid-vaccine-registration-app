@@ -8,6 +8,7 @@ use App\Http\Requests\VaccineCandidate\RegisterVaccineCandidateRequest;
 use App\Http\Resources\VaccineCandidateResource;
 use App\Traits\ApiResponse;
 use App\Repositories\VaccineCandidateRepository;
+use Illuminate\Http\JsonResponse;
 
 class RegisterVaccineCandidateController extends Controller
 {
@@ -23,7 +24,7 @@ class RegisterVaccineCandidateController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(RegisterVaccineCandidateRequest $registerVaccineCandidateRequest)
+    public function __invoke(RegisterVaccineCandidateRequest $registerVaccineCandidateRequest): JsonResponse
     {
         $candidate = $this->vaccineCandidate->store($registerVaccineCandidateRequest->validated());
 
