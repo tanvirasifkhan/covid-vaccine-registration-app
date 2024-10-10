@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\VaccineCandidateRepositoryInterface;
 use App\Models\VaccineCandidate;
 use Illuminate\Database\Eloquent\Collection;
+use App\Enums\VaccineCandidateStatus;
 
 class VaccineCandidateRepository implements VaccineCandidateRepositoryInterface
 {
@@ -27,7 +28,7 @@ class VaccineCandidateRepository implements VaccineCandidateRepositoryInterface
      */
     public function all(): Collection
     {
-        return VaccineCandidate::with('vaccineCenter')->orderBy('id', 'DESC')->get();
+        return VaccineCandidate::with('vaccineCenter')->get();
     }
 
     /**
@@ -36,5 +37,26 @@ class VaccineCandidateRepository implements VaccineCandidateRepositoryInterface
     public function fetch(int $id): VaccineCandidate | NULL
     {
         return VaccineCandidate::with('vaccineCenter')->where('id', $id)->first();
+    }
+
+    /**
+     * scheduling vaccine candidate
+     */
+    public function schedule(array $data, int $id): VaccineCandidate | NULL
+    {
+        VaccineCandidate::where('id', $id)->update([
+            'scheduled_at' => $data['scheduled_at'],
+            'status' => VaccineCandidateStatus::SCHEDULED
+        ]);
+
+        return $this->fetch($id);
+    }
+
+    /**
+     * check whether the candidate is already scheduled or not
+     */
+    public function alreadyScheduled(int $id): bool
+    {
+        return $this->fetch($id)->status == VaccineCandidateStatus::SCHEDULED->value;
     }
 }
