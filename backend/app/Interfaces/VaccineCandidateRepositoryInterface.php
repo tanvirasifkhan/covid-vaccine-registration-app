@@ -13,4 +13,8 @@ interface VaccineCandidateRepositoryInterface
 
     public function fetch(int $id): VaccineCandidate | NULL;
 
+    public function schedule(array $data, int $id): VaccineCandidate | NULL;
+
+    public function alreadyScheduled(int $id): bool;
+
 }
