@@ -26,6 +26,13 @@ class RegisterVaccineCandidateController extends Controller
      */
     public function __invoke(RegisterVaccineCandidateRequest $registerVaccineCandidateRequest): JsonResponse
     {
+        if(!$this->vaccineCandidate->canAccomodateCandidates($registerVaccineCandidateRequest->center_id)){
+            return $this->errorResponse(
+                errorMessage: 'Sorry ! This center is already out of its capacity',
+                statusCode: 417
+            );
+        }
+
         $candidate = $this->vaccineCandidate->store($registerVaccineCandidateRequest->validated());
 
         return $this->successResponse(
