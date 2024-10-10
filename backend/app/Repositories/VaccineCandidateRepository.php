@@ -96,4 +96,31 @@ class VaccineCandidateRepository implements VaccineCandidateRepositoryInterface
     {
         return VaccineCandidate::where('nid', $nid)->first();
     }
+
+    /**
+     * fetch candidates by status
+     */
+    public function fetchByStatus(string $candidateStatus): Collection
+    {
+        $cadidateList = VaccineCandidate::get();
+        switch($candidateStatus){
+            case VaccineCandidateStatus::ALL->value:
+                $cadidateList = $cadidateList;
+                break;
+            case VaccineCandidateStatus::REGISTERED->value:
+                $cadidateList = $cadidateList->whereNull('scheduled_at');
+                break;
+            case VaccineCandidateStatus::SCHEDULED->value:
+                $cadidateList = $cadidateList->where('status', VaccineCandidateStatus::SCHEDULED->value);
+                break;
+            case VaccineCandidateStatus::VACCINATED->value:
+                $cadidateList = $cadidateList->where('status', VaccineCandidateStatus::VACCINATED->value);
+                break;
+            default:
+                $cadidateList = $cadidateList;
+                break;
+        }
+
+        return $cadidateList;
+    }
 }

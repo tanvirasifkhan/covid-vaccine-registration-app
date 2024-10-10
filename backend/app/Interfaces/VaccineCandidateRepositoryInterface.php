@@ -25,4 +25,6 @@ interface VaccineCandidateRepositoryInterface
 
     public function searchByNID(string $nid): VaccineCandidate | NULL;
 
+    public function fetchByStatus(string $candidateStatus): Collection;
+
 }
