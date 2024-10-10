@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\VaccineCenter;
+use Illuminate\Notifications\Notifiable;
 
 class VaccineCandidate extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = "vaccine_candidates";
 
