@@ -21,9 +21,9 @@ Route::get('vaccine-centers', ReadVaccineCenterController::class);
 
 /******************* Vaccine Candidate API Endpoints *******************************/
 Route::post('vaccine-candidates', RegisterVaccineCandidateController::class);
-Route::patch('vaccine-candidates/{id}/schedule', AssignScheduleVaccineCandidateController::class);
 Route::get('vaccine-candidates/search/by-nid', SearchVaccineCandidateController::class);
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::patch('vaccine-candidates/{id}/schedule', AssignScheduleVaccineCandidateController::class);
     Route::get('vaccine-candidates', ReadAllVaccineCandidateController::class);
     Route::get('vaccine-candidates/{id}', ReadVaccineCandidateController::class);
     Route::get('vaccine-candidates/{status}/list', StatuswiseVaccineCandidateListController::class);
