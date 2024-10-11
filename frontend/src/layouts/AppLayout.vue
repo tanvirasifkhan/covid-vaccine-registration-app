@@ -4,7 +4,7 @@
 
 <template>
     <header class="flex items-center justify-between bg-white px-20 py-4 shadow-sm">
-        <h2 class="font-roboto capitalize text-gray-700 text-xl">Covid Vaccine Registration</h2>
+        <RouterLink :to="{ name: 'home' }" class="font-roboto capitalize text-gray-700 text-xl">Covid Vaccine Registration</RouterLink>
         <AppHeader />
     </header>
     <slot />
