@@ -17,3 +17,7 @@ export const search = (data: string) => {
 export const candidateList = (status: string, token: string) => {
     return API.get(`vaccine-candidates/${status}/list`, authorizationHeader(token))
 }
+
+export const candidateDetail = (id: number, token: string) => {
+    return API.get(`vaccine-candidates/${id}`, authorizationHeader(token))
+}

@@ -1,15 +1,18 @@
 <script setup lang="ts">
     import AppLayout from '@/layouts/AppLayout.vue'
-    import { onMounted } from 'vue'
+    import { onMounted, ref } from 'vue'
     import { useAuthStore } from '@/store/authStore'
     import { useCandidateStore } from '@/store/candidateStore'
     import { useRouter } from 'vue-router'
+    import CandidateInfoModal from '@/components/CandidateInfoModal.vue'
 
     onMounted(() => document.title = 'Registered Candidates')
 
     const authStore = useAuthStore()
     const router = useRouter()
     const candidateStore = useCandidateStore()
+
+    const isVisibleInfoModal = ref<boolean>(false)
 
     onMounted(() => {
         if(!authStore.isAuthenticated()){
@@ -18,6 +21,11 @@
     })
     
     onMounted(() => candidateStore.statusWiseCandidateList('registered'))
+
+    const fetchCandidate = async (id: number) => {
+        await candidateStore.fetchCandidateInfo(id)
+        isVisibleInfoModal.value = true
+    }
 
     
 </script>
@@ -55,12 +63,13 @@
                             </td>
                             <td class="p-4 font-roboto text-gray-600 whitespace-nowrap flex items-center space-x-2">
                                 <button class="bg-emerald-600 text-white px-3 py-1 rounded-2xl">Schedule</button>
-                                <button class="bg-indigo-600 text-white px-3 py-1 rounded-2xl">Details</button>
+                                <button @click="fetchCandidate(candidate.id)" class="bg-indigo-600 text-white px-3 py-1 rounded-2xl">Details</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>    
+            <CandidateInfoModal :candidate="candidateStore.candidate" @on-dialog-close="isVisibleInfoModal = !isVisibleInfoModal" :is-visible="isVisibleInfoModal" />
             <!-- <div class="fixed inset-0 items-center justify-center max-h-full bg-gray-400 bg-opacity-70">
                 <div class="relative bg-white w-4/12 mx-auto my-36 rounded border border-gray-200">
                     <h2 class="font-roboto px-4 py-3 text-gray-600 uppercase border-b border-gray-200">Schedule Candidate For Vacination</h2>

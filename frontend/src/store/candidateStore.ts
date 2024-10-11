@@ -2,7 +2,7 @@ import type { CandidateModel } from "@/models/CandidateModel"
 import type { CenterModel } from "@/models/CenterModel"
 import { defineStore } from "pinia"
 import { ref, type Ref } from "vue"
-import { centerList, register, search, candidateList } from "@/api/helpers/candidate"
+import { centerList, register, search, candidateList, candidateDetail } from "@/api/helpers/candidate"
 import { useAuthStore } from "./authStore"
 
 export const useCandidateStore = defineStore("candidates", ()=> {
@@ -64,6 +64,15 @@ export const useCandidateStore = defineStore("candidates", ()=> {
         }).catch(error => console.log(error))
     }
 
+    // fetch single candidate by id
+    const fetchCandidateInfo = async (id: number) => {
+        isFetching.value = true
+        await candidateDetail(id, authStore.getToken()).then(response => {
+            candidate.value = response.data.data
+            isFetching.value = false
+        }).catch(error => console.log(error))
+    }
+
     return {
         centers,
         fetchAllCenters,
@@ -75,6 +84,7 @@ export const useCandidateStore = defineStore("candidates", ()=> {
         candidate,
         errorMessage,
         statusWiseCandidateList,
-        candidates
+        candidates,
+        fetchCandidateInfo
     }
 })
