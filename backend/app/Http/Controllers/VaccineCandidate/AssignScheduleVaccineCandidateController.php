@@ -25,7 +25,7 @@ class AssignScheduleVaccineCandidateController extends Controller
      * Handle the incoming request.
      */
     public function __invoke(ScheduleVaccineCandidateRequest $scheduleVaccineCandidateRequest, int $id): JsonResponse
-    {
+    {    
         if($this->scheduleVaccineCandidate->isWeekend($scheduleVaccineCandidateRequest->scheduled_at)){
             return $this->errorResponse(
                 errorMessage: 'Selected date has to be a weekday',
