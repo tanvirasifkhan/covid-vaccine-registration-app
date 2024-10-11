@@ -2,7 +2,7 @@ import type { CandidateModel } from "@/models/CandidateModel"
 import type { CenterModel } from "@/models/CenterModel"
 import { defineStore } from "pinia"
 import { ref, type Ref } from "vue"
-import { centerList, register } from "@/api/helpers/candidate"
+import { centerList, register, search } from "@/api/helpers/candidate"
 import { useAuthStore } from "./authStore"
 
 export const useCandidateStore = defineStore("candidates", ()=> {
@@ -13,7 +13,11 @@ export const useCandidateStore = defineStore("candidates", ()=> {
 
     const successMessage = ref<string>('')
 
+    const errorMessage = ref<string>('')
+
     const errors = ref<any>({})
+
+    const candidate = ref<CandidateModel>({} as CandidateModel)
 
     const authStore = useAuthStore()
 
@@ -36,12 +40,28 @@ export const useCandidateStore = defineStore("candidates", ()=> {
         })
     }
 
+    // search candidates
+    const searchCandidates = async (data: string) => {
+        await search(data).then(response => {
+            if(response.data.errorMessage && response.data.data === null){
+                errorMessage.value = response.data.errorMessage
+            }else{
+                candidate.value = response.data.data
+            }            
+        }).catch(error => {
+            errorMessage.value = error.response.data.errors
+        })
+    }
+
     return {
         centers,
         fetchAllCenters,
         isFetching,
         registerCandidate,
         errors,
-        successMessage
+        successMessage,
+        searchCandidates,
+        candidate,
+        errorMessage
     }
 })

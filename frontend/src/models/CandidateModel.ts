@@ -9,5 +9,8 @@ export interface CandidateModel {
     phone: string,
     nid: string,
     status?: string,
-    scheduled_at?: string
+    scheduled_at?: {
+        raw: string,
+        human: string
+    }
 }

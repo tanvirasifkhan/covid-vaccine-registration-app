@@ -27,6 +27,7 @@ export const useAuthStore = defineStore("auth", ()=> {
             }else{
                 setUser(response.data.data)
                 errors.value = {}
+                errorMessage.value = ''
             }            
         }).catch(error => {
             errors.value = error.response.data.errors
@@ -38,6 +39,7 @@ export const useAuthStore = defineStore("auth", ()=> {
         await logout(getToken()).then(() => {
             setUser(null)
             localStorage.removeItem("user")
+            errorMessage.value = ''
         }).catch(error => console.log(error))
     }
 

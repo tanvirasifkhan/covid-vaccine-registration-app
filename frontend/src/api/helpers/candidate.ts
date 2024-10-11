@@ -9,3 +9,7 @@ export const centerList = () => {
 export const register = (candidate: CandidateModel) => {
     return API.post('vaccine-candidates', candidate)
 }
+
+export const search = (data: string) => {
+    return API.get(`vaccine-candidates/search/by-nid?nid=${data}`)
+}
