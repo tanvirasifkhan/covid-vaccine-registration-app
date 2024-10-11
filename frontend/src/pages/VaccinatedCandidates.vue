@@ -6,7 +6,7 @@
     import { useRouter } from 'vue-router'
     import CandidateInfoModal from '@/components/CandidateInfoModal.vue'
 
-    onMounted(() => document.title = 'Scheduled Candidates')
+    onMounted(() => document.title = 'Vaccinated Candidates')
 
     const authStore = useAuthStore()
     const router = useRouter()
