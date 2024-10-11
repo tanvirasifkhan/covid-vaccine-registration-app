@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
+use App\Models\VaccineCandidate;
+use App\Notifications\VaccineCandidateScheduleEmailNotification;
+use App\Console\Commands\SendScheduleEmail;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote')->hourly();
+Schedule::command('send:vaccine-schedule-email')->timezone('Asia/Dhaka')->at("06:17");
