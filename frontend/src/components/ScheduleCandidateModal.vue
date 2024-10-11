@@ -14,7 +14,7 @@
 
     const confirmSchedule = async (id: number, data: any) => {
         await candidateStore.assignSchedule(id, data)
-        if(Object.keys(candidateStore.errors).length === 0) {
+        if(Object.keys(candidateStore.errors).length === 0 && candidateStore.errorMessage === '') {
             emit('onScheduleConfirmation')
         }        
     }
@@ -39,6 +39,7 @@
                             <input type="date" v-model="data.scheduled_at" class="focus: outline-none font-roboto rounded-xl text-gray-600 px-4 py-2 border border-gray-100" placeholder="Choose schedule date">
                         </div>
                         <p class="text-red-600 font-roboto text-sm" v-if="candidateStore.errors?.scheduled_at">{{ candidateStore.errors?.scheduled_at.toString() }}</p>
+                        <p class="text-red-600 font-roboto text-sm" v-else-if="candidateStore.errorMessage">{{ candidateStore.errorMessage }}</p>
                     </div>
                     <div class="flex justify-end items-center space-x-3">
                         <button @click="$emit('onScheduleDialogClose')" class="px-3 py-2 bg-red-600 text-white rounded-2xl font-roboto">Cancel</button>

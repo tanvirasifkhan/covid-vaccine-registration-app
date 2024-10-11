@@ -77,7 +77,18 @@ export const useCandidateStore = defineStore("candidates", ()=> {
     // assign schedule
     const assignSchedule = async (id: number, scheduled_at: string) => {
         await scheduleCandidate(id, scheduled_at, authStore.getToken()).then(response => {
-            successMessage.value = response.data.successMessage
+            if(response.data.errorMessage){
+                errorMessage.value = response.data.errorMessage
+            }else{
+                errorMessage.value = ''
+            }
+
+            if(response.data.successMessage){
+                successMessage.value = response.data.successMessage
+            }else{
+                successMessage.value = ''
+            }
+
             errors.value = {}
         }).catch(error => {
             errors.value = error.response.data.errors
