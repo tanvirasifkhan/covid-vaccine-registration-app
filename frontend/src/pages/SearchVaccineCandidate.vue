@@ -53,7 +53,10 @@
             <div v-if="isSearched" class="bg-white rounded-xl">
                 <h2 class="text-gray-700 font-roboto text-xl text-center p-3 border-b border-gray-100">Search Result by NID</h2>
                 <div class="p-8">
-                    <h1 v-if="Object.keys(candidateStore.candidate).length === 0" class="font-roboto text-red-600 text-lg text-center">{{ candidateStore.errorMessage }}</h1>
+                    <div class="flex flex-col space-y-10 items-center" v-if="Object.keys(candidateStore.candidate).length === 0">
+                        <h1 class="font-roboto text-red-600 text-lg text-center">{{ candidateStore.errorMessage }}</h1>
+                        <RouterLink :to="{ name: 'registration' }" class="font-roboto text-white bg-emerald-500 p-3 block w-6/12 text-center rounded-2xl">Register for Getting Vaccinated</RouterLink>
+                    </div>                    
                     <div v-else class="flex-col space-y-2">
                         <h3 class="font-roboto text-gray-600">Name : {{ candidateStore.candidate?.name }}</h3>
                         <h3 class="font-roboto text-gray-600">Email Address : {{ candidateStore.candidate?.email }}</h3>
