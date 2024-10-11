@@ -6,3 +6,5 @@ use App\Notifications\VaccineCandidateScheduleEmailNotification;
 use App\Console\Commands\SendScheduleEmail;
 
 Schedule::command('send:vaccine-schedule-email')->timezone('Asia/Dhaka')->at("06:17");
+
+Schedule::command('change:candidate-status-to-vaccinated')->timezone('Asia/Dhaka')->at("06:27");
