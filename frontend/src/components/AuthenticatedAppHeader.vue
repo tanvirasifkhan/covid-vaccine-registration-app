@@ -1,3 +1,16 @@
+<script setup lang="ts">
+    import { useAuthStore } from '@/store/authStore'
+    import { useRouter } from 'vue-router'
+
+    const authStore = useAuthStore()
+    const router = useRouter()
+
+    const logout = async () => {
+        await authStore.signOut()
+        router.push({ name: 'admin-login' })
+    }
+</script>
+
 <template>
     <div class="flex items-center">
         <nav>
@@ -11,7 +24,7 @@
         </nav>
     </div>
     <div class="flex items-center space-x-3">
-        <h3>Tanvir Ahmed Khan</h3>
-        <RouterLink :to="{ name: 'admin-login' }" class="font-roboto text-white bg-red-500 px-3 py-2 rounded-2xl">Logout</RouterLink>
+        <h3>{{ authStore.getUser()?.name }}</h3>
+        <button @click.prevent="logout" class="font-roboto text-white bg-red-500 px-3 py-2 rounded-2xl">Logout</button>
     </div>    
 </template>

@@ -1,8 +1,19 @@
 <script setup lang="ts">
     import AppLayout from '@/layouts/AppLayout.vue'
     import { onMounted } from 'vue'
+    import { useAuthStore } from '@/store/authStore'
+    import { useRouter } from 'vue-router'
 
     onMounted(() => document.title = 'Search Candidates')
+
+    const authStore = useAuthStore()
+    const router = useRouter()
+
+    onMounted(() => {
+        if(!authStore.isAuthenticated()){
+            router.push({ name: 'admin-login' })
+        }
+    })
 </script>
 
 <template>

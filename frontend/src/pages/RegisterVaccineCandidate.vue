@@ -2,7 +2,7 @@
     import AppLayout from '@/layouts/AppLayout.vue'
     import { onMounted } from 'vue'
 
-    onMounted(() => document.title = 'Vaccine Candidate Registration')
+    onMounted(() => document.title = 'Search Registered Candidates')
 </script>
 
 <template>

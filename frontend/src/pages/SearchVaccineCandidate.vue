@@ -2,7 +2,7 @@
     import AppLayout from '@/layouts/AppLayout.vue'
     import { onMounted } from 'vue'
 
-    onMounted(() => document.title = 'Search Candidates')
+    onMounted(() => document.title = 'Scheduled Candidates')
 </script>
 
 <template>

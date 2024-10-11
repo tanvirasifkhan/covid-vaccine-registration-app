@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router"
 import HomePage from "@/pages/HomePage.vue"
+import { useAuthStore } from "@/store/authStore"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -30,10 +31,16 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/dashboard',
         component: ()=> import('@/pages/DashboardPage.vue'),
-        name: 'dashboard'
+        name: 'dashboard',
+        meta: {
+            requiredAuth: true
+        }
     },
     {
         path: '/candidates',
+        meta: {
+            requiredAuth: true
+        },
         children: [
             {
                 path: 'registered',
@@ -64,6 +71,15 @@ const router = createRouter({
     history: createWebHistory()
 })
 
+router.beforeEach((to, from, next) => {
 
+    const authStore = useAuthStore()
+
+    if(to.meta.requiredAuth && !authStore.isAuthenticated()){
+        next({ name: 'admin-login' })
+    }else{
+        next()
+    }
+})
 
 export default router
