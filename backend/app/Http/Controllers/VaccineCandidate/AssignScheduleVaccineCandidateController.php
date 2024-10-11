@@ -25,10 +25,19 @@ class AssignScheduleVaccineCandidateController extends Controller
      * Handle the incoming request.
      */
     public function __invoke(ScheduleVaccineCandidateRequest $scheduleVaccineCandidateRequest, int $id): JsonResponse
-    {    
+    {  
+        date_default_timezone_set('Asia/Dhaka');
+
         if($this->scheduleVaccineCandidate->isWeekend($scheduleVaccineCandidateRequest->scheduled_at)){
             return $this->errorResponse(
-                errorMessage: 'Selected date has to be a weekday',
+                errorMessage: 'Selected date has to be a weekday. Friday/Saturday not allowed',
+                statusCode: 417
+            );
+        }
+        
+        if(date('Y-m-d') == $scheduleVaccineCandidateRequest->scheduled_at || date('Y-m-d') > $scheduleVaccineCandidateRequest->scheduled_at){
+            return $this->errorResponse(
+                errorMessage: 'Same day or previous day not allowed.Select a futuristic date',
                 statusCode: 417
             );
         }
