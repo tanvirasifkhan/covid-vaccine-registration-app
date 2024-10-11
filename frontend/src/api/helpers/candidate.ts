@@ -21,3 +21,7 @@ export const candidateList = (status: string, token: string) => {
 export const candidateDetail = (id: number, token: string) => {
     return API.get(`vaccine-candidates/${id}`, authorizationHeader(token))
 }
+
+export const scheduleCandidate = (id: number, scheduled_at: string, token: string) => {
+    return API.patch(`vaccine-candidates/${id}/schedule`, { scheduled_at: scheduled_at }, authorizationHeader(token))
+}

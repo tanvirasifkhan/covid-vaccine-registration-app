@@ -2,7 +2,8 @@ import type { CandidateModel } from "@/models/CandidateModel"
 import type { CenterModel } from "@/models/CenterModel"
 import { defineStore } from "pinia"
 import { ref, type Ref } from "vue"
-import { centerList, register, search, candidateList, candidateDetail } from "@/api/helpers/candidate"
+import { centerList, register, search, 
+    candidateList, candidateDetail, scheduleCandidate } from "@/api/helpers/candidate"
 import { useAuthStore } from "./authStore"
 
 export const useCandidateStore = defineStore("candidates", ()=> {
@@ -73,6 +74,16 @@ export const useCandidateStore = defineStore("candidates", ()=> {
         }).catch(error => console.log(error))
     }
 
+    // assign schedule
+    const assignSchedule = async (id: number, scheduled_at: string) => {
+        await scheduleCandidate(id, scheduled_at, authStore.getToken()).then(response => {
+            successMessage.value = response.data.successMessage
+            errors.value = {}
+        }).catch(error => {
+            errors.value = error.response.data.errors
+        })
+    }
+
     return {
         centers,
         fetchAllCenters,
@@ -85,6 +96,7 @@ export const useCandidateStore = defineStore("candidates", ()=> {
         errorMessage,
         statusWiseCandidateList,
         candidates,
-        fetchCandidateInfo
+        fetchCandidateInfo,
+        assignSchedule
     }
 })
