@@ -15,6 +15,8 @@
 
     const isVisibleInfoModal = ref<boolean>(false)
 
+    const isVisibleScheduleModal = ref<boolean>(false)
+
     onMounted(() => {
         if(!authStore.isAuthenticated()){
             router.push({ name: 'admin-login' })
@@ -27,10 +29,15 @@
         await candidateStore.fetchCandidateInfo(id)
         isVisibleInfoModal.value = true
     }  
+
+    const openScheduleCandidate = async (id: number) => {
+        await candidateStore.fetchCandidateInfo(id)
+        isVisibleScheduleModal.value = true
+    }
     
     const fetchAfterSchedule = async () => {
         await candidateStore.statusWiseCandidateList('registered')
-        isVisibleInfoModal.value = false
+        isVisibleScheduleModal.value = false
     }
 
     
@@ -68,7 +75,7 @@
                                 <span class="px-3 py-1 bg-sky-100 border border-sky-200 text-sky-700 rounded-2xl font-roboto">Registered</span>
                             </td>
                             <td class="p-4 font-roboto text-gray-600 whitespace-nowrap flex items-center space-x-2">
-                                <button @click="fetchCandidate(candidate.id)" class="bg-emerald-600 text-white px-3 py-1 rounded-2xl">Schedule</button>
+                                <button @click="openScheduleCandidate(candidate.id)" class="bg-emerald-600 text-white px-3 py-1 rounded-2xl">Schedule</button>
                                 <button @click="fetchCandidate(candidate.id)" class="bg-indigo-600 text-white px-3 py-1 rounded-2xl">Details</button>
                             </td>
                         </tr>
@@ -78,8 +85,8 @@
             <CandidateInfoModal :candidate="candidateStore.candidate" @on-dialog-close="isVisibleInfoModal = !isVisibleInfoModal" :is-visible="isVisibleInfoModal" />
             <ScheduleCandidateModal :candidate="candidateStore.candidate" 
                 @on-schedule-confirmation="fetchAfterSchedule"
-                @on-schedule-dialog-close="isVisibleInfoModal = !isVisibleInfoModal" 
-                :is-open="isVisibleInfoModal" />
+                @on-schedule-dialog-close="isVisibleScheduleModal = !isVisibleScheduleModal" 
+                :is-open="isVisibleScheduleModal" />
         </div>
     </AppLayout>
 </template>
