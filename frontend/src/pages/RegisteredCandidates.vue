@@ -44,7 +44,7 @@
                         <th class="text-left font-roboto px-4 py-2 text-gray-600">Actions</th>
                     </thead>
                     <tbody>
-                        <tr v-for="candidate in candidateStore.candidates" :key="candidate.id" :class="candidate.id % 2 === 0 ? 'bg-slate-50' : ''">
+                        <tr v-for="(candidate, index) in candidateStore.candidates" :key="candidate.id" :class="index % 2 !== 0 ? 'bg-slate-50' : ''">
                             <td class="p-4 font-roboto text-gray-600 whitespace-nowrap">{{ candidate.name }}</td>
                             <td class="p-4 font-roboto text-gray-600 whitespace-nowrap">{{ candidate.center?.name }}</td>
                             <td class="p-4 font-roboto text-gray-600 whitespace-nowrap">{{ candidate.email }}</td>
