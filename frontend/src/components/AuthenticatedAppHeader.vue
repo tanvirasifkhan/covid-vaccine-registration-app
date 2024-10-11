@@ -2,11 +2,11 @@
     <div class="flex items-center">
         <nav>
             <ul class="flex space-x-3">
-                <li><RouterLink :to="{  }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Dashboard</RouterLink></li>
-                <li><RouterLink :to="{  }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Candidates</RouterLink></li>
-                <li><RouterLink :to="{  }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Scheduled Candidates</RouterLink></li>
-                <li><RouterLink :to="{  }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Vaccinated Candidates</RouterLink></li>
-                <li><RouterLink :to="{ name: 'search' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Search NID</RouterLink></li>
+                <li><RouterLink :to="{ name: 'dashboard' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Dashboard</RouterLink></li>
+                <li><RouterLink :to="{ name: 'registered_candidates' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Registered</RouterLink></li>
+                <li><RouterLink :to="{ name: 'scheduled_candidates' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Scheduled</RouterLink></li>
+                <li><RouterLink :to="{ name: 'vaccinated_candidates' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Vaccinated</RouterLink></li>
+                <li><RouterLink :to="{ name: 'search_candidates' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Search NID</RouterLink></li>
             </ul>
         </nav>
     </div>

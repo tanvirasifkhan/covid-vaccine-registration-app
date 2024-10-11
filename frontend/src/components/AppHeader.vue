@@ -2,6 +2,7 @@
     <div class="flex items-center">
         <nav>
             <ul class="flex space-x-3">
+                <li><RouterLink :to="{ name: 'home' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Home</RouterLink></li>
                 <li><RouterLink :to="{ name: 'search' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Search</RouterLink></li>
                 <li><RouterLink :to="{ name: 'registration' }" exact-active-class="text-emerald-600" class="hover:text-emerald-600 font-roboto text-gray-700">Register for Vaccine</RouterLink></li>
             </ul>
