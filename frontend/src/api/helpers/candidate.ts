@@ -13,3 +13,7 @@ export const register = (candidate: CandidateModel) => {
 export const search = (data: string) => {
     return API.get(`vaccine-candidates/search/by-nid?nid=${data}`)
 }
+
+export const candidateList = (status: string, token: string) => {
+    return API.get(`vaccine-candidates/${status}/list`, authorizationHeader(token))
+}
