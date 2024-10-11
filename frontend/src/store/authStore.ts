@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { login, logout } from "@/api/helpers/auth"
 import type { LoginUserModel } from "@/models/LoginUserModel"
+import { ref } from "vue"
 
 export const useAuthStore = defineStore("auth", ()=> {
     
@@ -10,14 +11,26 @@ export const useAuthStore = defineStore("auth", ()=> {
 
     const getToken = () => getUser().token
 
+    const errors = ref<any>({})
+
+    const errorMessage = ref<string>('')
+
     // is logged in
     const isAuthenticated = () => getUser() !== null
 
     // sign the admin into the system
     const signIn = async (user: LoginUserModel) => {
         await login(user).then(response => {
-            setUser(response.data.data)
-        }).catch(error => console.log(error))
+            if(response.data.errorMessage){
+                errorMessage.value = response.data.errorMessage
+                errors.value = {}
+            }else{
+                setUser(response.data.data)
+                errors.value = {}
+            }            
+        }).catch(error => {
+            errors.value = error.response.data.errors
+        })
     }
 
     // sign the admin out of the system
@@ -33,6 +46,8 @@ export const useAuthStore = defineStore("auth", ()=> {
         signOut,
         isAuthenticated,
         getToken,
-        getUser
+        getUser,
+        errors,
+        errorMessage
     }
 })
