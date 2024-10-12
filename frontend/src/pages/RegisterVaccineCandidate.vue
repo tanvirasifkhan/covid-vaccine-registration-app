@@ -2,9 +2,11 @@
     import AppLayout from '@/layouts/AppLayout.vue'
     import { onMounted, ref, type Ref } from 'vue'
     import { useCandidateStore } from '@/store/candidateStore'
-    import type { CandidateModel } from '@/models/CandidateModel';
+    import type { CandidateModel } from '@/models/CandidateModel'
+    import { useToast } from 'vue-toast-notification'
 
     const candidateStore = useCandidateStore()
+    const $toast = useToast()
 
     onMounted(() => document.title = 'Search Registered Candidates')
 
@@ -16,6 +18,7 @@
         await candidateStore.registerCandidate(candidate.value)
         if(Object.keys(candidateStore.errors).length === 0) {
             candidate.value = {} as CandidateModel
+            $toast.success(candidateStore.successMessage)
         }
     }
 
@@ -26,7 +29,6 @@
         <div class="mx-auto w-4/12 mt-20">
             <div class="bg-white rounded-xl">
                 <h2 class="text-gray-700 font-roboto text-xl text-center p-3 border-b border-gray-100">Vaccine Candidate Reservation</h2>
-                <div class="bg-green-50 text-green-600 rounded p-3 m-3" v-if="candidateStore.successMessage">{{ candidateStore.successMessage }}</div>
                 <form @submit.prevent="register" class="p-8 space-y-3">
                     <div class="flex flex-col space-y-2">
                         <label for="name" class="font-roboto text-gray-600 cursor-pointer">Name</label>

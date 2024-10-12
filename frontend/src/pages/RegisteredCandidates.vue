@@ -3,6 +3,7 @@
     import { onMounted, ref } from 'vue'
     import { useAuthStore } from '@/store/authStore'
     import { useCandidateStore } from '@/store/candidateStore'
+    import { useToast } from 'vue-toast-notification'
     import { useRouter } from 'vue-router'
     import CandidateInfoModal from '@/components/CandidateInfoModal.vue'
     import ScheduleCandidateModal from '@/components/ScheduleCandidateModal.vue'
@@ -12,6 +13,7 @@
     const authStore = useAuthStore()
     const router = useRouter()
     const candidateStore = useCandidateStore()
+    const $toast = useToast()
 
     const isVisibleInfoModal = ref<boolean>(false)
 
@@ -38,6 +40,7 @@
     const fetchAfterSchedule = async () => {
         await candidateStore.statusWiseCandidateList('registered')
         isVisibleScheduleModal.value = false
+        $toast.success(candidateStore.successMessage)
     }
 
     
