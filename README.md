@@ -130,7 +130,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 Otherwise there will be a confliction and email notifications will not be sent properly.
 
 ### STEP #5:  Running Background Queue and Schedule Work
-Follow the instruction for running background workers
+Follow the instruction for running background workers. Check the Laravel `routes/console.php` file. Email notification sending is scheduled at `21:00` for the previous day of the scheduled date. Change status to `vaccinated` task is scheduled at `01:00` just after the day of the actual scheduled date.
 
 **For Background Queue Work Run**
 
