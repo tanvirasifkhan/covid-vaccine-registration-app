@@ -159,6 +159,7 @@ Notification::route('mail', 'taylor@example.com')
 https://laravel.com/docs/11.x/notifications#on-demand-notifications
 
 **About Search Query Optimization**
+
 In our app, there is a search by nid functionality by which people can search their status using their respective NID. Currently this is in a normal state. But in future we might need to optimize it. Here are some optimizing techniues I can suggest
 
 1. Using caching service like **Redis**
