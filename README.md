@@ -24,7 +24,7 @@ https://docs.docker.com/engine/install/ubuntu/
 
 We need to install and configure **PHP 8.3** and [Composer](https://getcomposer.org/download/) for PHP package management.After installation, you can check it by `composer --version` command.
 
-After that install and configure [NodeJS](https://nodejs.org/en). You can use the [NVM](https://github.com/nvm-sh/nvm to install and configure NodeJs. 
+After that install and configure [NodeJS](https://nodejs.org/en). You can use the [NVM](https://github.com/nvm-sh/nvm) to install and configure NodeJs. 
 
 **Follow the commands to install NodeJS easily**
 
@@ -61,7 +61,11 @@ and `cd /covid-vaccine-registration-app`
 2. `touch .env` and `cp .env.example .env`
 3. `npm install`
 
- and `cd /covid-vaccine-registration-app` then build the docker using `docker compose up -d` command. It will take some time based on your internet connection to complete. After building the Docker there will be 
+ and `cd /covid-vaccine-registration-app`
+ 
+### STEP #2:  Building Docker Image
+ 
+  then build the docker using `docker compose up -d` command. It will take some time based on your internet connection to complete. After building the Docker there will be 
 
 **Four Containers ( Running on ports )**
 
@@ -72,6 +76,8 @@ and `cd /covid-vaccine-registration-app`
 
 **Important Note**
 If mysql server is already running on your system at `3306` port then it will conflict with the docker mysql server. Because mysql server docker container also configured to run on port `3306`. So you need to stop the local mysql server by using `sudo systemctl stop mysql` and `sudo systemctl disable mysql`. After that run `docker compose down` and `docker compose up -d`. It should all be running fine in your system. So all your docker containers are running fine.
+
+### STEP #3:  Configure The Backend API Database
 
 Now its time to configure backend `.env` file. Configure your database credentials like below and keep it as it is
 
@@ -87,6 +93,33 @@ DB_PASSWORD=
 Now access your `phpMyadmin` panel inside your browser on port `localhost:8080` and create a database called `covid-vaccine-registration`.
 
 Then from the root folder of your project run `docker exec covid-vaccine-backend php artisan migrate` command to create all the tables in the database. Then run `docker exec covid-vaccine-backend php artisan db:seed` to prepopulate admin login and vaccine centers data. By the way, there are 10 vaccine centers data prepopulated in the database inside `vaccine_centers` table.
+
+### STEP #4:  Configure The Email Client
+In this step, we will be configuring the email client at which we will be sending email notifications. In this application, I am using [Mailtrap](https://mailtrap.io) for capturing email notifications from the localhost. Create an account in this website and create an demo inbox. Nevigate to that inbox, choose **Laravel 9+** from the **Integration > SMTP > Code Samples > PHP** tab and copy your email configuration env code. Your code will look something like the below
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=<your_username>
+MAIL_PASSWORD=<your_password>
+```
+This is a sample code block. Copy the generated code from [Mailtrap](https://mailtrap.io) inbox and paste it to your backend `.env` file. Please comment out the existing `.env` configuration
+
+```
+MAIL_MAILER=log
+MAIL_HOST=127.0.0.1
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+Otherwise there will be a confliction and email notifications will not be sent properly.
+
+### STEP #5:  Running Background Queue and Schedule Work
+Follow the instruction for running background workers
 
 **For Background Queue Work Run**
 `docker exec covid-vaccine-backend php artisan queue:work`
@@ -131,27 +164,7 @@ In our app, there is a search by nid functionality by which people can search th
 
 These are the initial optimization techniques that can be implemented in the future if needed.
 
-Here are some of the screenshots of the app. Screenshots are given to get a glimpse of the overall app.
-
-![image info](https://i.postimg.cc/mc13498p/Screenshot-from-2024-10-12-04-58-37.png)
-
-![image info](https://i.postimg.cc/qhfsv7FJ/Screenshot-from-2024-10-12-04-59-06.png)
-
-![image info](https://i.postimg.cc/0MppMsgp/Screenshot-from-2024-10-12-04-59-25.png)
-
-![image info](https://i.postimg.cc/wRgDDGHn/Screenshot-from-2024-10-12-05-10-39.png)
-
-![image info](https://i.postimg.cc/1VBwBr3X/Screenshot-from-2024-10-12-05-12-17.png)
-
-![image info](https://i.postimg.cc/RqBYPC0x/Screenshot-from-2024-10-12-05-12-27.png)
-
-![image info](https://i.postimg.cc/6TfmFs72/Screenshot-from-2024-10-12-05-13-25.png)
-
-![image info](https://i.postimg.cc/KRcH29L9/Screenshot-from-2024-10-12-05-16-26.png)
-
-![image info](https://i.postimg.cc/GHMShkxb/Screenshot-from-2024-10-12-05-17-03.png)
-
-![image info](https://i.postimg.cc/ZWCs9Cwp/Screenshot-from-2024-10-12-05-20-06.png)
+Hope, the application runs smoothly. Enjoy and thanks
 
 
 
