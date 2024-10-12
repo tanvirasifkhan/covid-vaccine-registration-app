@@ -75,6 +75,7 @@ and `cd /covid-vaccine-registration-app`
 4. covid-vaccine-database-admin-panel (http://localhost:8080)
 
 **Important Note**
+
 If mysql server is already running on your system at `3306` port then it will conflict with the docker mysql server. Because mysql server docker container also configured to run on port `3306`. So you need to stop the local mysql server by using `sudo systemctl stop mysql` and `sudo systemctl disable mysql`. After that run `docker compose down` and `docker compose up -d`. It should all be running fine in your system. So all your docker containers are running fine.
 
 ### STEP #3:  Configure The Backend API Database
@@ -122,10 +123,12 @@ Otherwise there will be a confliction and email notifications will not be sent p
 Follow the instruction for running background workers
 
 **For Background Queue Work Run**
+
 `docker exec covid-vaccine-backend php artisan queue:work`
 This command will be responsible sending email in the background without hampering the user experience.
 
 **For Background Schedule Work Run**
+
 `docker exec covid-vaccine-backend php artisan schedule:work`
 This command will be responsible for scheduling background tasks.
 
@@ -138,6 +141,7 @@ Now guess what, you are good to access the whole application in the browser.
 You can now play around with the application.
 
 **About Email/SMS Notification Sending Driver**
+
 Currently, we are sending email notifications via `mail` driver. If you want to send mobile SMS, then you will have to 
 use that particular server driver. For instance `slack`, `vonage`, `twillio` etc and we can send notifications through multiple routes at the same time like below.
 
