@@ -95,6 +95,16 @@ Now access your `phpMyadmin` panel inside your browser on port `localhost:8080` 
 
 Then from the root folder of your project run `docker exec covid-vaccine-backend php artisan migrate` command to create all the tables in the database. Then run `docker exec covid-vaccine-backend php artisan db:seed` to prepopulate admin login and vaccine centers data. By the way, there are 10 vaccine centers data prepopulated in the database inside `vaccine_centers` table.
 
+**Default Admin Login Credentials**
+
+By default, an Admin login credential will be created after running the database seed command. Keep in mind that, we do not have registration system for the Admin. So, you will have to use the below credential for login as Admin.
+
+```
+Email address: admin@gmail.com
+Password: admin
+```
+
+
 ### STEP #4:  Configure The Email Client
 In this step, we will be configuring the email client at which we will be sending email notifications. In this application, I am using [Mailtrap](https://mailtrap.io) for capturing email notifications from the localhost. Create an account in this website and create an demo inbox. Nevigate to that inbox, choose **Laravel 9+** from the **Integration > SMTP > Code Samples > PHP** tab and copy your email configuration env code. Your code will look something like the below
 
