@@ -15,20 +15,33 @@ export const useAuthStore = defineStore("auth", ()=> {
 
     const errorMessage = ref<string>('')
 
+    const successMessage = ref<string>('')
+
     // is logged in
     const isAuthenticated = () => getUser() !== null
 
     // sign the admin into the system
     const signIn = async (user: LoginUserModel) => {
         await login(user).then(response => {
-            if(response.data.errorMessage){
+
+            setUser(response.data.data)
+
+            if(response.data.successMessage && response.data.data !== null){
+                successMessage.value = response.data.successMessage
+                errors.value = {}
+            }else{
+                successMessage.value = ''
+                errors.value = {}
+            }
+
+            if(response.data.errorMessage && response.data.data === null){
                 errorMessage.value = response.data.errorMessage
                 errors.value = {}
             }else{
-                setUser(response.data.data)
                 errors.value = {}
                 errorMessage.value = ''
-            }            
+            }   
+
         }).catch(error => {
             errors.value = error.response.data.errors
         })
@@ -36,9 +49,10 @@ export const useAuthStore = defineStore("auth", ()=> {
 
     // sign the admin out of the system
     const signOut = async () => {
-        await logout(getToken()).then(() => {
+        await logout(getToken()).then(response => {
             setUser(null)
             localStorage.removeItem("user")
+            successMessage.value = response.data.successMessage
             errorMessage.value = ''
         }).catch(error => console.log(error))
     }
@@ -50,6 +64,7 @@ export const useAuthStore = defineStore("auth", ()=> {
         getToken,
         getUser,
         errors,
-        errorMessage
+        errorMessage,
+        successMessage
     }
 })

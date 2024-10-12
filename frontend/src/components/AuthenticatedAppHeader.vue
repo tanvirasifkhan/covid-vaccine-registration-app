@@ -1,13 +1,16 @@
 <script setup lang="ts">
     import { useAuthStore } from '@/store/authStore'
     import { useRouter } from 'vue-router'
+    import { useToast } from 'vue-toast-notification'
 
     const authStore = useAuthStore()
     const router = useRouter()
+    const $toast = useToast()
 
     const logout = async () => {
         await authStore.signOut()
         router.push({ name: 'admin-login' })
+        $toast.success(authStore.successMessage)
     }
 </script>
 

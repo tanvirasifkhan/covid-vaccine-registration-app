@@ -2,11 +2,13 @@
     import AppLayout from '@/layouts/AppLayout.vue'
     import { onMounted, ref, type Ref } from 'vue'
     import { useAuthStore } from '@/store/authStore'
+    import { useToast } from 'vue-toast-notification'
     import type { LoginUserModel } from '@/models/LoginUserModel'
     import { useRouter } from 'vue-router'
 
     const authStore = useAuthStore()
     const router = useRouter()
+    const $toast = useToast()
 
     const user: Ref<LoginUserModel> = ref({} as LoginUserModel)
 
@@ -15,7 +17,13 @@
         if(Object.keys(authStore.errors).length === 0) {
             user.value = {} as LoginUserModel
             router.push({ name: 'dashboard' })
-        }        
+            if(authStore.successMessage) {
+                $toast.success(authStore.successMessage)
+            } 
+            if(authStore.errorMessage){
+                $toast.error(authStore.errorMessage)
+            }
+        }   
     }
 
     onMounted(() => document.title = 'Admin Login')
@@ -31,8 +39,8 @@
     <AppLayout>
         <div class="mx-auto w-4/12 mt-20">
             <div class="bg-white rounded-xl">
-                <h2 class="text-gray-700 font-roboto text-xl text-center p-3 border-b border-gray-100">Admin Login</h2>
-                <div class="bg-red-50 text-red-600 rounded p-3 m-3" v-if="authStore.errorMessage">{{ authStore.errorMessage }}</div>
+                <h2 class="text-gray-700 font-roboto text-xl text-center p-3 border-b border-gray-100">Admin Login</h2>                
+                <!-- <div class="bg-red-50 text-red-600 rounded p-3 m-3" v-if="authStore.errorMessage">{{ authStore.errorMessage }}</div> -->
                 <form @submit.prevent="adminLogin" class="p-8 space-y-3">
                     <div class="flex flex-col space-y-2">
                         <label for="email" class="font-roboto text-gray-600 cursor-pointer">Email address</label>
